@@ -1,0 +1,165 @@
+import { Hono } from 'hono'
+import { PrismaClient } from '@prisma/client/edge'
+import { withAccelerate } from '@prisma/extension-accelerate'
+import { decode, sign, verify } from 'hono/jwt'
+
+
+const app = new Hono<{
+	Bindings: {
+		DATABASE_URL: string,
+    JWT_SECRET: string,
+	},
+  Variables: {
+    userId: string,
+  }
+}>()
+
+
+app.use('/api/v1/blog/*', async(c,next)=>{
+  const header = c.req.header("authorization") || "";
+
+  const token = header.split(" ")[1]
+
+  const response = await verify(token, c.env.JWT_SECRET)
+  if(!response){
+    c.status(401);
+    return c.json({
+      error: "Unauthorized"
+    })
+  }
+  c.set('userId', response.id);
+  await next();
+})
+
+
+
+app.post('/api/v1/signup',async(c) => {
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate())
+
+  const body = await c.req.json();
+
+  try {
+    const user = await prisma.user.create({
+      data:{
+        email: body.email,
+        password: body.password,
+        name: body.name
+      },
+    })
+
+    const jwt = await sign({ id: user.id}, c.env.JWT_SECRET);
+    return c.json({jwt})
+
+  } catch (error) {
+    return c.json({
+      error: "Error while signing up new user"
+    });
+  }
+})
+
+app.post('/api/v1/signin', async(c) => {
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate())
+
+  const body = await c.req.json();
+
+  try {
+    const user = await prisma.user.findUnique({
+      where:{
+        email: body.email,
+        password: body.password
+      }
+    })
+
+    if(!user){
+      c.status(403);
+      return c.json({
+        error: "Error while logging in"
+      })
+    }
+
+    const jwt = await sign({ id: user.id }, c.env.JWT_SECRET);
+    return c.json({jwt})
+  } catch (error) {
+    return c.json({
+      Error: "Error while logging In"
+    });
+  }
+})
+
+app.post('/api/v1/blog', async(c) => {
+  const userId = c.get('userId');
+  
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL
+  }).$extends(withAccelerate())
+
+  const body = await c.req.json();
+  try {
+    const post = await prisma.post.create({
+      data: {
+        title: body.title,
+        content: body.content,
+        authorId: userId
+      }
+    });
+    return c.json({
+      id: post.id
+    })
+  } catch (error) {
+    return c.json({
+      error: "Error Creating blog post"
+    })
+  }
+})
+
+app.put('/api/v1/blog', async(c) => {
+  const userId = c.get('userId');
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate())
+
+  const body = await c.req.json();
+  try {
+    prisma.post.update({
+      where:{
+        id: body.id,
+        authorId: userId,
+      },
+      data:{
+        title: body.title,
+        content: body.content
+      }
+    })
+    return c.text('Post Updated')
+  } catch (error) {
+    error: "Post updation unsuccesfull!"
+  }
+
+})
+
+app.get('/api/v1/blog/:id', async(c) => {
+  const id = c.req.param('id');
+
+  try {
+    const prisma = new PrismaClient({
+      datasourceUrl: c.env.DATABASE_URL
+    }).$extends(withAccelerate());
+  
+    const post = await prisma.post.findUnique({
+      where:{
+        id
+      }
+    });
+    return c.json(post);
+  
+  } catch (error) {
+    error: "Error while fetching post"
+  }
+})
+
+
+export default app
