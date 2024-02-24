@@ -2,7 +2,7 @@ import { Hono } from 'hono'
 import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
 import { decode, sign, verify } from 'hono/jwt'
-import { signUpBody, signInBody, createPostBody, updatePostBody } from '@sincerelyyyash/common-app'}
+import { signUpBody, signInBody, createPostBody, updatePostBody } from '@sincerelyyyash/common-app'
 
 
 const app = new Hono<{
@@ -145,7 +145,7 @@ app.put('/api/v1/blog', async(c) => {
 		c.status(400);
 		return c.json({ error: "invalid input" });
 	}
-  
+
   try {
     prisma.post.update({
       where:{
