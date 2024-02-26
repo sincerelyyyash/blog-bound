@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router-dom'
 function NewBlogNav() {
     const navigate = useNavigate();
   return (
-    <header className='padding-x absolute z-10 h-16 w-full'>
-        <nav className='flex justify-between items-center max-container  border-gray-100'>
+    <header className='padding-x  w-full'>
+        <nav className='flex justify-between items-center max-container'>
             <a href="/">
                 <img src={logo} alt="Logo" width={120} height={120} />
             </a>

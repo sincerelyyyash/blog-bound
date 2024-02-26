@@ -1,18 +1,21 @@
 import React from 'react'
 import NewBlogNav from '../Components/NewBlogNav'
-import WritingField from '../Components/WritingField'
+import TitleInputField from '../Components/TitleInputField'
+import SubTitle from '../Components/SubTitle'
 
 
 function CreateBlog() {
   return (
-    <>
-    <div className='flex flex-col'>
+    <main className='flex flex-col'>
       <NewBlogNav />
-      <section>
-      <WritingField/>
-      </section>
-    </div>
-    </>
+      <div>
+      <TitleInputField/>
+      </div>
+      <div>
+      <SubTitle/>
+      </div>
+    </main>
+
   )
 }
 
