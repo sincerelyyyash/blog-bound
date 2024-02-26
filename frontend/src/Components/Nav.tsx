@@ -12,7 +12,7 @@ function Nav() {
             </a>
             <ul className='flex-1 flex justify-end px-14 items-center  max-lg:hidden'>
                 <li>
-                    <button className='border-2  border-black font-bold flex items-center justify-center rounded-md h-12 w-56 text-black ml-5 mr-5'>
+                    <button onClick={()=>{navigate("/newblog")}} className='border-2  border-black font-bold flex items-center justify-center rounded-md h-12 w-56 text-black ml-5 mr-5'>
                     <a href="/">
                     <img src={write} alt="Logo" width={13} height={13} />
                     </a>
