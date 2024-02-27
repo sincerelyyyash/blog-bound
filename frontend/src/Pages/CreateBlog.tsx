@@ -1,7 +1,7 @@
-import React from 'react'
+
 import NewBlogNav from '../Components/NewBlogNav'
-import TitleInputField from '../Components/TitleInputField'
-import SubTitle from '../Components/SubTitle'
+import InputField from '../Components/InputField'
+
 
 
 function CreateBlog() {
@@ -9,10 +9,13 @@ function CreateBlog() {
     <main className='flex flex-col'>
       <NewBlogNav />
       <div>
-      <TitleInputField/>
+      <InputField  rows={2} placeholder="What's the title?"/>
       </div>
       <div>
-      <SubTitle/>
+      <InputField  rows={4} placeholder='Enter description here'/>
+      </div>
+      <div>
+      <InputField  rows={15} placeholder='Write your content here'/>
       </div>
     </main>
 
