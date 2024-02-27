@@ -6,7 +6,7 @@ import InputField from '../Components/InputField'
 
 function CreateBlog() {
   return (
-    <main className='flex flex-col'>
+    <main className='flex flex-col ml-20 mr-20'>
       <NewBlogNav />
       <div>
       <InputField  rows={2} placeholder="What's the title?"/>
@@ -14,7 +14,7 @@ function CreateBlog() {
       <div>
       <InputField  rows={4} placeholder='Enter description here'/>
       </div>
-      <div>
+      <div className='mb-8'>
       <InputField  rows={15} placeholder='Write your content here'/>
       </div>
     </main>
