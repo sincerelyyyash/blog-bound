@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 function Nav() {
     const navigate = useNavigate();
   return (
-    <header className='padding-x absolute z-10 h-16 w-full'>
+    <header className='padding-x h-16 w-full'>
         <nav className='flex justify-between items-center max-container border-2 border-gray-100 h-20'>
 
             <span className='font-montserrat font-semibold text-2xl m-6'>BlogBound</span>
