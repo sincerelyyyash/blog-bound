@@ -1,13 +1,13 @@
 import React from 'react'
 import { logo} from '../constants'
 
-interface BlogProps{
+interface BlogCardProps{
     title: string,
     description: string,
     author: string,
 }
 
-const BlogCard: React.FC<BlogProps> = ({title, description, author})=> {
+const BlogCard: React.FC<BlogCardProps> = ({title, description, author})=> {
   return (
     <div className='flex flex-row mr-12 ml-12 mt-12  w-3/5 h-40 rounded-md p-2'>
         <div className='w-2/5'>
