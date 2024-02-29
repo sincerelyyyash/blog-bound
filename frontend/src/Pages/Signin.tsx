@@ -27,13 +27,13 @@ function Signin() {
 
   return (
     <div className='flex justify-center'>
-    <div className="w-full p-5 shadow-2xl lg:max-w-lg mt-10 rounded-lg">
+    <div className="w-full p-5 shadow-2xl lg:max-w-lg mt-10 rounded-lg font-montserrat">
             <div className="space-y-2">
             <div className='flex flex-col px-10 py-10'>
         <h3 className='flex justify-center text-black text-4xl font-bold'>
             Sign In
         </h3>
-        <p className='flex justify-center mt-4 text-gray-500 text-xl'>
+        <p className='flex justify-center mt-4 text-gray-500 text-xl font-palanquin'>
             Enter your credentials to login
         </p>
         
