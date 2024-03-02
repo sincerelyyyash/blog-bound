@@ -15,7 +15,7 @@ const app = new Hono<{
   }
 }>()
 
-
+//Auth middleware for blogs
 app.use('/api/v1/blog/*', async(c,next)=>{
   const header = c.req.header("authorization") || "";
 
@@ -33,7 +33,7 @@ app.use('/api/v1/blog/*', async(c,next)=>{
 })
 
 
-
+//Signup route
 app.post('/api/v1/signup',async(c) => {
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
@@ -65,6 +65,8 @@ app.post('/api/v1/signup',async(c) => {
   }
 })
 
+
+//SignIn Route
 app.post('/api/v1/signin', async(c) => {
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
@@ -101,6 +103,7 @@ app.post('/api/v1/signin', async(c) => {
   }
 })
 
+//Add new blog Route
 app.post('/api/v1/blog', async(c) => {
   const userId = c.get('userId');
   
@@ -119,7 +122,9 @@ app.post('/api/v1/blog', async(c) => {
     const post = await prisma.post.create({
       data: {
         title: body.title,
+        subtitle: body.subtitle,
         content: body.content,
+        image: body.imageURL,
         authorId: userId
       }
     });
@@ -128,11 +133,14 @@ app.post('/api/v1/blog', async(c) => {
     })
   } catch (error) {
     return c.json({
-      error: "Error Creating blog post"
+      // error: "Error Creating blog post"
+      error: {error}
     })
   }
 })
 
+
+//Update blog route
 app.put('/api/v1/blog', async(c) => {
   const userId = c.get('userId');
   const prisma = new PrismaClient({
@@ -164,6 +172,7 @@ app.put('/api/v1/blog', async(c) => {
 
 })
 
+//Get Blog by ID Route
 app.get('/api/v1/blog/:id', async(c) => {
   const id = c.req.param('id');
 

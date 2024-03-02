@@ -17,6 +17,7 @@ export type signInBody = z.infer<typeof signInBody>;
 
 export const createPostBody = z.object({
     title: z.string(),
+    subtitle: z.string(),
     content: z.string(),
 })
 
@@ -24,6 +25,7 @@ export type createPostBody = z.infer<typeof createPostBody>;
 
 export const updatePostBody = z.object({
     title: z.string(),
+    subtitle: z.string(),
     content: z.string(),
 })
 
