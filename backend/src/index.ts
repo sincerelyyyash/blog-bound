@@ -11,7 +11,8 @@ const app = new Hono<{
     JWT_SECRET: string,
 	},
   Variables: {
-    userId: string,
+    userId: number,
+    id: number,
   }
 }>()
 
@@ -112,11 +113,11 @@ app.post('/api/v1/blog', async(c) => {
   }).$extends(withAccelerate())
 
   const body = await c.req.json();
-  const { success } = createPostBody.safeParse(body);
-	if (!success) {
-		c.status(400);
-		return c.json({ error: "invalid input" });
-	}
+  // const { success } = createPostBody.safeParse(body);
+	// if (!success) {
+	// 	c.status(400);
+	// 	return c.json({ error: "invalid input" });
+	// }
 
   try {
     const post = await prisma.post.create({
@@ -183,7 +184,7 @@ app.get('/api/v1/blog/:id', async(c) => {
   
     const post = await prisma.post.findUnique({
       where:{
-        id
+        id: Number(id)
       }
     });
     return c.json(post);
