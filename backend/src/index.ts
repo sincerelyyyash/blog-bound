@@ -113,11 +113,15 @@ app.post('/api/v1/blog', async(c) => {
   }).$extends(withAccelerate())
 
   const body = await c.req.json();
-  // const { success } = createPostBody.safeParse(body);
-	// if (!success) {
-	// 	c.status(400);
-	// 	return c.json({ error: "invalid input" });
-	// }
+
+
+
+  const { success } = createPostBody.safeParse(body);
+	if (!success) {
+		c.status(400);
+		return c.json({ error: "invalid input" });
+	}
+
 
   try {
     const post = await prisma.post.create({
@@ -125,17 +129,17 @@ app.post('/api/v1/blog', async(c) => {
         title: body.title,
         subtitle: body.subtitle,
         content: body.content,
-        image: body.imageURL,
+        image: body.image,
         authorId: userId
       }
     });
+  
     return c.json({
       id: post.id
     })
   } catch (error) {
     return c.json({
-      // error: "Error Creating blog post"
-      error: {error}
+      error: "Error Creating blog post"
     })
   }
 })
@@ -163,12 +167,13 @@ app.put('/api/v1/blog', async(c) => {
       },
       data:{
         title: body.title,
+        subtitle: body.subtitle,
         content: body.content
       }
     })
     return c.text('Post Updated')
   } catch (error) {
-    error: "Post updation unsuccesfull!"
+    error: "Post updation failed!"
   }
 
 })
@@ -187,10 +192,39 @@ app.get('/api/v1/blog/:id', async(c) => {
         id: Number(id)
       }
     });
-    return c.json(post);
+    return c.json({post});
   
   } catch (error) {
     error: "Error while fetching post"
+  }
+})
+
+//Get all blogs
+app.get('/api/v1/bulk', async (c) => {
+  const prisma = new PrismaClient({
+      datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate())
+
+  try {
+    const posts = await prisma.post.findMany({
+      select: {
+          content: true,
+          title: true,
+          subtitle: true,
+          id: true,
+          author: {
+              select: {
+                  name: true
+              }
+          }
+      }
+  });
+
+  return c.json({
+      posts
+  })
+  } catch (error) {
+    message: 'Cannot get all posts'
   }
 })
 
