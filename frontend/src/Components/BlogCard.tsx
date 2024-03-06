@@ -9,12 +9,12 @@ interface BlogCardProps{
 
 const BlogCard: React.FC<BlogCardProps> = ({title, description, author})=> {
   return (
-    <div className='flex flex-row mr-12 ml-12 mt-12  w-3/5 h-40 rounded-md p-2'>
-        <div className='w-2/5'>
+    <div className='flex flex-row mr-12 ml-44 mt-12  w-2/5 h-40 rounded-md p-2'>
+        {/* <div className='w-2/5'>
             <a href="/">
                 <img src={logo} alt="Logo" width={120} height={120} />
             </a>
-       </div>
+       </div> */}
        <div>
         <h2 className='text-xl font-montserrat font-bold p-1'>{title}</h2>
         <div>
