@@ -26,7 +26,7 @@ function Signin() {
     //   };
 
     return (
-        <div className='h-screen' style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover' }}>
+        <div className='h-screen'>
             <div className='flex justify-center'>
                 <div className="w-full p-5 shadow-2xl lg:max-w-lg mt-10 rounded-lg font-montserrat bg-white">
                     <div className="space-y-2">

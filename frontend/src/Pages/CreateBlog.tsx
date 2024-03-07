@@ -14,9 +14,7 @@ function CreateBlog() {
       <div>
       <InputField  rows={4} placeholder='Enter description here'/>
       </div>
-      <div className='mb-8'>
-      <InputField  rows={15} placeholder='Write your content here'/>
-      </div>
+      
     </main>
 
   )
