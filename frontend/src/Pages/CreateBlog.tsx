@@ -1,6 +1,7 @@
 
 import NewBlogNav from '../Components/NewBlogNav'
 import InputField from '../Components/InputField'
+import Editor from '../Components/Editor'
 
 
 
@@ -14,7 +15,7 @@ function CreateBlog() {
       <div>
       <InputField  rows={4} placeholder='Enter description here'/>
       </div>
-      
+      <Editor/>
     </main>
 
   )
