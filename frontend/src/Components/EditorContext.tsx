@@ -1,26 +1,37 @@
-import { createContext, useRef } from "react";
-import EditorJS from "@editorjs/editorjs";
+import { createContext, ReactNode, useRef } from "react";
+import EditorJS, { ToolConstructable, ToolSettings } from "@editorjs/editorjs";
 
-interface EditorContextProviderProps{
-    holder: string,
-    placeholder: string,
-    tools: object
+interface EditorContextProviderProps {
+    holder: string;
+    placeholder: string;
+    tools: { [toolName: string]: ToolConstructable | ToolSettings };
+    children: ReactNode; 
 }
 
-export const EditorContext = createContext()
+interface EditorContextValue {
+    initEditor: () => void;
+    editorInstanceRef: React.MutableRefObject<EditorJS | null>;
+}
 
-export default function EditorContextProvider(props: EditorContextProviderProps){
-    const editorInstanceRef = useRef(null)
-    const initEditor = ()=>{
+export const EditorContext = createContext<EditorContextValue>({
+    initEditor: () => {},
+    editorInstanceRef: { current: null }
+});
+
+export default function EditorContextProvider(props: EditorContextProviderProps) {
+    const editorInstanceRef = useRef<EditorJS | null>(null);
+
+    const initEditor = () => {
         const editor = new EditorJS({
-            holder: "editorjs",
-            placeholder: "Let's write down your thoughts!",
-            tools:{},
-        })
-        editorInstanceRef.current = editor
-    }
+            holder: props.holder,
+            placeholder: props.placeholder,
+            tools: props.tools,
+        });
+        editorInstanceRef.current = editor;
+    };
+
     return (
-        <EditorContext.Provider value={{initEditor, editorInstanceRef}}>
+        <EditorContext.Provider value={{ initEditor, editorInstanceRef }}>
             {props.children}
         </EditorContext.Provider>
     );
