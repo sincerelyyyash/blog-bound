@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useRef } from "react";
 import EditorJS, { ToolConstructable, ToolSettings } from "@editorjs/editorjs";
 import Paragraph from "@editorjs/paragraph"
-import Header from "editorjs/header"
+import Header from "@editorjs/header"
 import Alert from "editorjs-alert"
 import List from '@editorjs/list'
 import Embed from "@editorjs/embed"
@@ -39,7 +39,65 @@ export default function EditorContextProvider(props: EditorContextProviderProps)
         const editor = new EditorJS({
             holder: "editorjs",
             placeholder: "Let's write",
-            tools: props.tools,
+            tools: {
+                textAlignment: {
+                    class: AlignmentBlockTune,
+                    config: {
+                        default: "left",
+                        blocks:{
+                            header: "center"
+                        }
+                    }
+                },
+                paragraph:{
+                    class: Paragraph,
+                    tunes: ["textAlignment"]
+                },
+                header: {
+                    class : Header,
+                    inlineToolbar: true,
+                    tunes: ["textAlignment"],
+                    config : {
+                        placeholder: "Enter a Header",
+                        levels: [1,2,3,4,5],
+                        defaultLevel: 2,
+                    }
+                },
+                alert: {
+                    class: Alert,
+                    config : {
+                        defaultType: "primary",
+                        messagePlaceholder: "Enter Something"
+                    }
+                },
+                list: {
+                    class: List,
+                    config:{
+                        defaultStyle: "unordered"
+                    }
+                },
+                checklist:{
+                    class: Checklist,
+                },
+                image: {
+                    class: SimpleImage,
+                },
+                underline: {
+                    class: Underline
+                },
+                strikethrough: {
+                    class: Strikethrough
+                },
+                marker: {
+                    class: Marker,
+                },
+                inlineCode:{
+                    class: InlineCode,
+                },
+                changeCase: {
+                    class: ChangeCase
+                },
+            },
             onChange: async () => {
                 // console.log(editor);
                 const data = await editor.save()
