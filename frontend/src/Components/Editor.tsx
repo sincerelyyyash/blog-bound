@@ -2,20 +2,18 @@ import  { useContext, useEffect, useRef } from 'react'
 import { EditorContext } from './EditorContext'
 
 function Editor() {
-    const {initEditor} =useContext(EditorContext)
+    const {initEditor} = useContext(EditorContext)
     const editorRef = useRef(false);
 
     useEffect(()=>{
         if(!editorRef.current){
             initEditor()
-            editorRef.current = true
+            editorRef.current = true;
         }
         
     },[])
   return (
-    <div id="editorjs">
-        
-    </div>
+    <div id="editorjs"></div>
   )
 }
 

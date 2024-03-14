@@ -4,15 +4,13 @@ import Paragraph from "@editorjs/paragraph"
 import Header from "@editorjs/header"
 import Alert from "editorjs-alert"
 import List from '@editorjs/list'
-import Embed from "@editorjs/embed"
 import Underline from "@editorjs/underline"
 import ChangeCase from "editorjs-change-case"
 import Strikethrough from "@sotaproject/strikethrough"
 import Checklist from "@editorjs/checklist"
 import SimpleImage from "@editorjs/simple-image"
-import Marker from "@editorjs/marker"
+import Marker from "@editorjs/marker";
 import InlineCode from "@editorjs/inline-code"
-import ColorPlugin from "editorjs-text-color-plugin"
 import AlignmentBlockTune from "editorjs-text-alignment-blocktune"
 
 interface EditorContextProviderProps {
