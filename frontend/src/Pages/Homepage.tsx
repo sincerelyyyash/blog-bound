@@ -7,6 +7,9 @@ function Homepage() {
       <div>
       <Nav/>
       </div>
+      <div>
+        Latest
+      </div>
       <div >
       <BlogCard title='I Found 3 Passive Income Ideas Anyone Can Start'
       description='Build your First or Next Passive Income Stream 
