@@ -116,20 +116,18 @@ app.post('/api/v1/blog', async(c) => {
 
 
 
-  const { success } = createPostBody.safeParse(body);
-	if (!success) {
-		c.status(400);
-		return c.json({ error: "invalid input" });
-	}
+  // const { success } = createPostBody.safeParse(body);
+	// if (!success) {
+	// 	c.status(400);
+	// 	return c.json({ error: "invalid input" });
+	// }
 
 
   try {
     const post = await prisma.post.create({
       data: {
         title: body.title,
-        subtitle: body.subtitle,
         content: body.content,
-        image: body.image,
         authorId: userId
       }
     });
@@ -153,11 +151,11 @@ app.put('/api/v1/blog', async(c) => {
   }).$extends(withAccelerate())
 
   const body = await c.req.json();
-  const { success } = updatePostBody.safeParse(body);
-	if (!success) {
-		c.status(400);
-		return c.json({ error: "invalid input" });
-	}
+  // const { success } = updatePostBody.safeParse(body);
+	// if (!success) {
+	// 	c.status(400);
+	// 	return c.json({ error: "invalid input" });
+	// }
 
   try {
     prisma.post.update({
@@ -167,7 +165,6 @@ app.put('/api/v1/blog', async(c) => {
       },
       data:{
         title: body.title,
-        subtitle: body.subtitle,
         content: body.content
       }
     })
@@ -210,7 +207,6 @@ app.get('/api/v1/bulk', async (c) => {
       select: {
           content: true,
           title: true,
-          subtitle: true,
           id: true,
           author: {
               select: {

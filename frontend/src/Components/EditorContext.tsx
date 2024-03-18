@@ -98,7 +98,7 @@ export default function EditorContextProvider(props: EditorContextProviderProps)
             },
             onChange: async () => {
                 // console.log(editor);
-                const data = await editor.save()
+                const data =  await editor.save()
                 console.log(data)
             }
         });
