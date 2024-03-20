@@ -2,7 +2,7 @@ import { Hono } from 'hono'
 import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
 import { decode, sign, verify } from 'hono/jwt'
-import { signUpBody, signInBody, createPostBody, updatePostBody } from '@sincerelyyyash/common-app'
+import { signUpBody, signInBody, createPostBody, updatePostBody } from './zodValidation'
 
 
 const app = new Hono<{
@@ -116,11 +116,11 @@ app.post('/api/v1/blog', async(c) => {
 
 
 
-  // const { success } = createPostBody.safeParse(body);
-	// if (!success) {
-	// 	c.status(400);
-	// 	return c.json({ error: "invalid input" });
-	// }
+  const { success } = createPostBody.safeParse(body);
+	if (!success) {
+		c.status(400);
+		return c.json({ error: "invalid input" });
+	}
 
 
   try {
@@ -151,11 +151,11 @@ app.put('/api/v1/blog', async(c) => {
   }).$extends(withAccelerate())
 
   const body = await c.req.json();
-  // const { success } = updatePostBody.safeParse(body);
-	// if (!success) {
-	// 	c.status(400);
-	// 	return c.json({ error: "invalid input" });
-	// }
+  const { success } = updatePostBody.safeParse(body);
+	if (!success) {
+		c.status(400);
+		return c.json({ error: "invalid input" });
+	}
 
   try {
     prisma.post.update({

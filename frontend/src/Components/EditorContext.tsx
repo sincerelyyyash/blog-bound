@@ -96,11 +96,18 @@ export default function EditorContextProvider(props: EditorContextProviderProps)
                     class: ChangeCase
                 },
             },
+            // onChange: async () => {
+            //     // console.log(editor);
+            //     const data =  await editor.save()
+            //     console.log(data)
+            // }
             onChange: async () => {
-                // console.log(editor);
-                const data =  await editor.save()
-                console.log(data)
+                const data = await editor.save();
+                const blocks = data.blocks;
+                // console.log(data);
+                console.log(blocks);
             }
+            
         });
         editorInstanceRef.current = editor;
     };
